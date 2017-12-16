@@ -1,22 +1,28 @@
+#!/usr/bin/env groovy
+properties([
+   [$class: 'GithubProjectProperty',
+   displayName: '',
+   projectUrlStr: 'https://github.com/razOrganization/dir1.git/'],
+   pipelineTriggers([githubPush()])])
+
 pipeline {
-   agent any
-   
+   agent any 
+
    stages {
-       stage('Checkout') {
-           steps {
-             sh 'git --version'
-           }
-      }
-   
        stage('Build') {
            steps {
-             sh 'git branch'
+               sh 'pwd'
            }
        }
-       
-       stage('Deploy') {
+       stage('Test'){
            steps {
-               sh 'whoami'
+               sh 'java -version'
+               
+           }
+       }
+       stage('updownstream') {
+           steps {
+               build 'razOrganization/dir1/master'
            }
        }
    }
